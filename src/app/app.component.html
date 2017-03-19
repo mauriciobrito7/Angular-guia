@@ -1,0 +1,124 @@
+<h1>
+  {{title}}
+</h1>
+<div *ngFor="let voto of votos">
+  <input-component voto="{{voto.title}}"></input-component>
+</div>
+
+
+<!--Usamos la directiva *ngFor para hacer iteraciones en este caso haremos una lista con valores de un arreglo imaginario-->
+
+<!--Usamos la i como indice para indicar un orden de los clientes-->
+
+<!--Usamos el ngIf para mostrar a los clientes en una posicion par
+  podriamos poner valores a i como:
+  even - para indicar los pares
+  odd - para los valores impares
+  first - primera posición
+  last - ultima posición
+-->
+<ul *ngFor = "let cliente of clientes; let i = index">
+  <li *ngIf="i/2 == 0" >{{ i }} - {{ cliente }}</li>
+</ul>
+
+<!--para usar la directiva ngModel tenemos que tener importado en module principal formsModule. Así creamos un modelo data binding - two ways. Todas las modificaciones que se hagan desde el input seran reflejadas en el componente y por ende en la vista. Podemos modificar desde el componente también la vista quizas con un evento-->
+<input type="text" [(ngModel)]="nombre">
+
+<!--Esto es la interpolación y creamos un modelo que envia información del componente a la vista-->
+<h2>{{nombre}}</h2>
+
+
+<label for="numero1">Número 1:</label>
+<input type="number" id="numero1" [(ngModel)]="numero1">
+
+<label for="numero2">Número 2:</label>
+<input type="number" id="numero2" [(ngModel)]="numero2">
+<br>
+La suma es: {{ numero1 + numero2 }}
+<!--Los eventos se definen entre () y se igualan a la función que se va a llamar-->
+
+<button (click)="sumar()">Sumar</button>
+<br>
+<!--Normalmente las aplicaciones requieren de validaciones o capturas de datos mientras estos son ingresados para lo cual vamos a realizar la siguiente vista:
+ Vamos a tener un cuadro de texto para ingresar la información en este caso el nombre del cliente y a la vez ver el resultado mediante una interpolación
+-->
+<label for="cliente">Cliente:</label>
+<!--Usamos el evento keyup que representa cuando de pulsa una tecla
+#cliente será una variable local que solo existirá en la vista
+-->
+<input type="text" id="cliente"  #cli (keyup)="onKeyUp(cli.value)">
+<br>
+Propiedad de la clase: {{ cliente }}
+<br>
+Variable local: {{ cli.value }}
+
+
+<!--Las expresiones se las debe ubicar dentro de doble llaves {{}} la forma básica de una expresión es para mostrar la información contenida dentro de la propiedad en la vista ponemos el nombre de la propiedad y vemos que nos muestra el valor en la vista-->
+Ejemplo: {{ nombre }}
+
+<!--Las opereciones que se pueden hacer dentro de la expresión son las operaciones aritmeticas básicas-->
+Ejemplo: {{ (numero1 + numero2) * numero1 }}
+
+<!--Lo que nos permiten las expresiones es solo mostrar los valores que tienen las propiedades y hacer operaciones con ellas pero en ningún momento podemos alterar su valor original, no estan permitidas las asignaciones, ni hacer incrementos o decrementos con las variables, tampoco los operadores de bits como OR(|) ó AND (&), las operaciones que si podemos realizar son condicionales, es decir, comparaciones-->
+{{ (numero1 > numero2) && (numero1 < numero2) }}
+
+<div *ngIf="mostrar">
+    Clientes morosos.
+    <!--Otro formato para usar la directiva ngIf-->
+    <div template="ngIf deuda > 0">
+      Tiene deuda por cancelar
+      <template [ngIf]="ciudad == 'Puerto Ordaz'">
+        En ciudad de Puerto Ordaz
+      </template>
+    </div>
+</div>
+
+<button (click)="mostrar = !mostrar">Mostrar cliente morosos</button>
+<br><br>
+
+<div>
+  <input type="radio" name="pais" (click)="pais = 'Argentina'"> Argentina <br>
+  <input type="radio" name="pais" (click)="pais = 'Mexico'"> Mexico <br>
+  <input type="radio" name="pais" (click)="pais = 'Venezuela'"> Venezuela <br>
+  <input type="radio" name="pais" (click)="pais = 'Otro'"> Otro <br>
+  <div [ngSwitch]="pais">
+    <div *ngSwitchCase="'Argentina'">
+      {{ pais }} se encuentra en América del sur.
+    </div>
+    <div *ngSwitchCase="'Mexico'">
+      {{ pais }} se encuentra en América del norte.
+    </div>
+    <div *ngSwitchCase="'Venezuela'">
+      {{ pais }} se encuentra en América del sur.
+    </div>
+    <div *ngSwitchCase="'Otro'">
+      ¿Cuál es su país? <input type="text">
+    </div>
+    <div *ngSwitchDefault>
+      Selecciona un país
+    </div>
+  </div>
+</div>
+
+<div>
+  <ul>
+    <li *ngFor="let item of usuarios">
+      {{item.id}} - {{item.nombre}} - {{item.apellido}}
+      <button (click)="eliminar(item)" [ngClass]="setClases()">eliminar</button>
+    </li>
+  </ul>
+</div>
+
+<button (click)="agregar()" [ngClass]="setClases()">Agregar</button>
+<button (click)="activarClases()" >Activar</button>
+<br>
+<input type="text" [(ngModel)]="usuarios[0].nombre">
+
+
+<h2>Conversor</h2>
+
+<div>Cantidad: <input [(ngModel)]="cantidad" ></div>
+<div>1 dolar es : <input [(ngModel)]="factor" ></div>
+<p>
+  oh es : {{cantidad | conversorPipe:factor}}
+</p>
