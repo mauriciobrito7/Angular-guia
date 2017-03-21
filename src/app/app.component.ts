@@ -22,6 +22,14 @@ export class AppComponent {
   numero2: number = 0;
   cliente :string = "Mauricio";
 
+
+  parrafo = `public class ${this.nombre}{
+    \n
+                variable(){
+                  
+                }
+    }`;
+
   mostrar = true;
   deuda = 100;
   ciudad = "Puerto Ordaz"
