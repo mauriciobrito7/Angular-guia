@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { InputComponent} from './input/input.component';
-
+import { TicketService } from './services/ticket.service';
+import { ClientesService } from './services/clientes.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,13 @@ import { InputComponent} from './input/input.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  tickets:any;
+  lista = [];
+  constructor(private ticketService: TicketService, private clienteService : ClientesService){
+    this.tickets = ticketService.getTicket();
+    this.lista = this.clienteService.getClientes();
+  }
+
   title = 'app works!';
   votos = [
     {title: 'opción 1'},
@@ -21,14 +29,6 @@ export class AppComponent {
   numero1: number = 0;
   numero2: number = 0;
   cliente :string = "Mauricio";
-
-
-  parrafo = `public class ${this.nombre}{
-    \n
-                variable(){
-                  
-                }
-    }`;
 
   mostrar = true;
   deuda = 100;

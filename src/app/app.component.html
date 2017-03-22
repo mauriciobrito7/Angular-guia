@@ -114,10 +114,22 @@ Ejemplo: {{ (numero1 + numero2) * numero1 }}
 <br>
 <input type="text" [(ngModel)]="usuarios[0].nombre">
 
-<h2 gigant [tamano]="'70px'">Conversor</h2>
+<h2 gigant [tamano]="'70px'" [colorTexto]="'red'">Conversor</h2>
 
 <div>Cantidad: <input [(ngModel)]="cantidad" ></div>
 <div>1 dolar es : <input [(ngModel)]="factor" ></div>
 <p>
   oh es : {{cantidad | conversorPipe:factor}}
 </p>
+
+<ul>
+  <li *ngFor="let ticket of tickets">
+    <b>Ticket N: {{ticket.id}}</b> - {{ticket.titulo}} <span high>[{{ticket.estado}}]</span>
+  </li>
+</ul>
+
+<ul>
+  <li *ngFor="let cliente of lista">
+    <b>Cliente: {{cliente}}</b> 
+  </li>
+</ul>
